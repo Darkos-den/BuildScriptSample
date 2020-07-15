@@ -17,7 +17,6 @@
 include(
     ":android",
     ":common:core",
-    ":common:ios",
     ":common:network",
     ":common:repository"
 )
