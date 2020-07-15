@@ -65,4 +65,24 @@ object Libraries {
             get() = Versions.serialization
 
     }
+
+    enum class AndroidGradle(
+        override val depend: String
+    ) : IDepend {
+        GRADLE("com.android.tools.build:gradle");
+
+        override val version: String
+            get() = Versions.gradle
+
+    }
+
+    enum class Detekt(
+        override val depend: String
+    ) : IDepend {
+        GRADLE("io.gitlab.arturbosch.detekt:detekt-gradle-plugin");
+
+        override val version: String
+            get() = Versions.detekt
+
+    }
 }

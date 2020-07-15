@@ -1,5 +1,7 @@
 package config.depends
 
+import org.gradle.api.artifacts.dsl.DependencyHandler
+
 fun depend(block: () -> Pair<String, IDepend>): Depend {
     return block.invoke().let {
         Depend(it.first, it.second)
@@ -17,3 +19,5 @@ fun api(depend: IDepend): Depend {
 fun compileOnly(depend: IDepend): Depend {
     return Depend("compileOnly", depend)
 }
+
+fun DependencyHandler.classPath(depend: IDepend) = add("classpath", depend.classpath)

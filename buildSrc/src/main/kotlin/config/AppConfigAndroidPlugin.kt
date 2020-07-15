@@ -28,7 +28,8 @@ class AppConfigAndroidPlugin : Plugin<Project> {
             }
             buildTypes {
                 getByName("release") {
-
+                    isMinifyEnabled = true
+                    proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
                 }
                 getByName("debug") {
                     isMinifyEnabled = false
@@ -42,9 +43,9 @@ class AppConfigAndroidPlugin : Plugin<Project> {
     }
 
     private fun Project.dependenciesConfig() {
-        dependencies {
-            "detektPlugins"(project(":detect"))
-        }
+//        dependencies {
+//            "detektPlugins"(project(":detect"))
+//        }
     }
 
     companion object {

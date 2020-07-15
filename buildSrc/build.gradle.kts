@@ -3,6 +3,16 @@ val gradleVersion = "4.2.0-alpha04"
 
 plugins {
     `kotlin-dsl`
+    `kotlin-dsl-precompiled-script-plugins`
+}
+
+gradlePlugin {
+    plugins {
+        register("app-config-android") {
+            id = "app-config-android"
+            implementationClass = "config.AppConfigAndroidPlugin"
+        }
+    }
 }
 
 repositories {

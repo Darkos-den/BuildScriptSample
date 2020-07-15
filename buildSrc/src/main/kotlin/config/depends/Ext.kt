@@ -3,10 +3,6 @@ package config.depends
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 
-fun IDepend.processToString(): String {
-    return "$depend:$version"
-}
-
 fun List<Depend>.apply(scope: DependencyHandlerScope) {
     this.forEach {
         with(scope) {

@@ -1,3 +1,5 @@
+import config.Libraries
+import config.depends.classPath
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
@@ -6,11 +8,13 @@ buildscript {
         jcenter()
         google()
         mavenCentral()
+        maven(url = "https://plugins.gradle.org/m2/")
     }
 
     dependencies {
-        classpath(Kotlin.gradle)
-        classpath(Android.gradle)
+        classpath(Libraries.Kotlin.GRADLE.classpath)
+        classpath(Libraries.AndroidGradle.GRADLE.classpath)
+        classpath(Libraries.Detekt.GRADLE.classpath)
     }
 }
 

@@ -7,5 +7,5 @@ class Depend(
     constructor(
         method: String,
         depend: IDepend
-    ) : this(method, depend.processToString())
+    ) : this(method, depend.classpath)
 }
