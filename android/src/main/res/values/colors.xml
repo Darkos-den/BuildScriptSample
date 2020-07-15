@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/vintageBlack</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">@color/steelBlue</color>
+
+    <color name="snowWhite">#fffafa</color>
+    <color name="steelBlue">#5991dc</color>
+    <color name="smokeGray">#6c757d</color>
+    <color name="vintageBlack">#343a40</color>
+</resources>
