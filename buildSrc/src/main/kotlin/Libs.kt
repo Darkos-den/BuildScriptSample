@@ -1,9 +1,8 @@
-package config
-
+import config.Versions
 import config.depends.IDepend
 import config.depends.implementation
 
-object Libraries {
+object Libs {
 
     enum class Kotlin(
         override val depend: String

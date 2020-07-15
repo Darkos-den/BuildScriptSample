@@ -20,4 +20,4 @@ fun compileOnly(depend: IDepend): Depend {
     return Depend("compileOnly", depend)
 }
 
-fun DependencyHandler.classPath(depend: IDepend) = add("classpath", depend.classpath)
+fun DependencyHandler.classPath(depend: IDepend) = add("classpath", depend.full)

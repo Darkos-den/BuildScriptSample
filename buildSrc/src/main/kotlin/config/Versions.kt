@@ -2,6 +2,17 @@ package config
 
 object Versions {
 
+    object Project {
+        const val applicationId = "com.company.projectName"
+
+        private const val patch = 1
+        private const val minor = 0
+        private const val major = 0
+
+        const val versionCodeValue = 1
+        const val versionNameValue = "${major}.${minor}.${patch}"
+    }
+
     const val kotlin = "1.3.72"
     const val ktor = "1.3.2"
     const val coroutines = "1.3.7"

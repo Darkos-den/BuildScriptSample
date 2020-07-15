@@ -1,5 +1,3 @@
-import config.Libraries
-import config.depends.classPath
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
@@ -12,9 +10,9 @@ buildscript {
     }
 
     dependencies {
-        classpath(Libraries.Kotlin.GRADLE.classpath)
-        classpath(Libraries.AndroidGradle.GRADLE.classpath)
-        classpath(Libraries.Detekt.GRADLE.classpath)
+        classpath(Libs.Kotlin.GRADLE.full)
+        classpath(Libs.AndroidGradle.GRADLE.full)
+        classpath(Libs.Detekt.GRADLE.full)
     }
 }
 

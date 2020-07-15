@@ -4,34 +4,10 @@ plugins {
     kotlin("multiplatform")
 
     id("com.android.library")
+    id("app-config-android")
 }
 
-android {
-    defaultConfig {
-        compileSdkVersion(Android.Versions.compileSdk)
-        targetSdkVersion(Android.Versions.targetSdk)
-        minSdkVersion(Android.Versions.minSdk)
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-    }
-
-    sourceSets {
-        getByName("main").apply {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            java.srcDirs("src/androidMain/kotlin")
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-}
+applyMultiPlatformSourceSets()
 
 kotlin {
     val uniqueName = "${project.rootProject.name}${project.name.capitalize()}"

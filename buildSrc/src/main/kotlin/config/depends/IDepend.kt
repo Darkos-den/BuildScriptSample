@@ -4,6 +4,6 @@ interface IDepend {
     val depend: String
     val version: String
 
-    val classpath: String
+    val full: String
         get() = "$depend:$version"
 }

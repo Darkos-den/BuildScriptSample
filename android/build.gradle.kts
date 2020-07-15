@@ -1,28 +1,14 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("app-config-android")
 }
 
-val versionMajor = 0
-val versionMinor = 0
-val versionPatch = 1
+androidApplicationConfig()
 
 android {
     defaultConfig {
-        applicationId = "io.dynamax.android"
-        versionCode = versionMajor * 100 + versionMinor * 10 + versionPatch
-        versionName = "$versionMajor.$versionMinor.$versionPatch"
         vectorDrawables.useSupportLibrary = true
-        compileSdkVersion(Android.Versions.compileSdk)
-        targetSdkVersion(Android.Versions.targetSdk)
-        minSdkVersion(Android.Versions.minSdk)
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
     }
 
     sourceSets {
@@ -45,11 +31,6 @@ android {
     composeOptions {
         kotlinCompilerVersion = AndroidX.Versions.composeCompiler
         kotlinCompilerExtensionVersion = AndroidX.Versions.compose
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 

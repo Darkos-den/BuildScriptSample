@@ -2,24 +2,11 @@ object Kotlin {
 
     const val version = "1.3.72"
 
-    const val gradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
     const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
 
     const val testCommon = "org.jetbrains.kotlin:kotlin-test-common"
     const val testAnnotationsCommon = "org.jetbrains.kotlin:kotlin-test-annotations-common"
     const val testJunit = "org.jetbrains.kotlin:kotlin-test-junit:$version"
-}
-
-object Android {
-
-    object Versions {
-        const val gradlePlugin = "4.2.0-alpha04"
-        const val compileSdk = 29
-        const val targetSdk = 29
-        const val minSdk = 23
-    }
-
-    const val gradle = "com.android.tools.build:gradle:${Versions.gradlePlugin}"
 }
 
 object AndroidX {
@@ -68,10 +55,6 @@ object Ktor {
 
     private const val version = "1.3.2"
 
-    const val clientCore = "io.ktor:ktor-client-core:$version"
-    const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
-    const val clientLogging = "io.ktor:ktor-client-logging:$version"
-
     const val clientOkttp = "io.ktor:ktor-client-okhttp:$version"
     const val clientSerializationJvm = "io.ktor:ktor-client-serialization-jvm:$version"
     const val clientLoggingJvm = "io.ktor:ktor-client-logging-jvm:$version"
@@ -80,3 +63,4 @@ object Ktor {
     const val clientSerializationIos = "io.ktor:ktor-client-serialization-native:$version"
     const val clientLoggingIos = "io.ktor:ktor-client-logging-native:$version"
 }
+

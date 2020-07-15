@@ -1,13 +1,12 @@
-import config.Libraries
 import config.depends.apply
 import config.depends.implementation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 val deps = listOf(
-    implementation(Libraries.Kotlin.STDLIB),
-    *Libraries.Ktor.defaultCommon,
-    implementation(Libraries.Coroutines.COMMON),
-    implementation(Libraries.Serialization.COMMON)
+    implementation(Libs.Kotlin.STDLIB),
+    *Libs.Ktor.defaultCommon,
+    implementation(Libs.Coroutines.COMMON),
+    implementation(Libs.Serialization.COMMON)
 )
 
 plugins {
@@ -18,14 +17,7 @@ plugins {
     id("app-config-android")
 }
 
-android {
-    sourceSets {
-        getByName("main").apply {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            java.srcDirs("src/androidMain/kotlin")
-        }
-    }
-}
+applyMultiPlatformSourceSets()
 
 kotlin {
     val uniqueName = "${project.rootProject.name}${project.name.capitalize()}"
