@@ -1,3 +1,5 @@
+import config.depends.apply
+import config.depends.implementation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -8,6 +10,11 @@ plugins {
 }
 
 applyMultiPlatformSourceSets()
+
+val commonDeps = listOf(
+    implementation(Libs.Kotlin.STDLIB),
+    implementation(Libs.Coroutines.COMMON)
+)
 
 kotlin {
     val uniqueName = "${project.rootProject.name}${project.name.capitalize()}"
@@ -29,35 +36,20 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                commonDeps.apply(this)
                 implementation(project(":common:repository"))
-
-                implementation(Kotlin.stdlib)
-                implementation(Coroutines.common)
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation(Coroutines.android)
+                implementation(Libs.Coroutines.ANDROID.full)
             }
         }
 
         val iosMain by getting {
             dependencies {
-                implementation(Coroutines.native)
-            }
-        }
-
-        val commonTest by getting {
-            dependencies {
-                implementation(Kotlin.testCommon)
-                implementation(Kotlin.testAnnotationsCommon)
-            }
-        }
-
-        val androidTest by getting {
-            dependencies {
-                implementation(Kotlin.testJunit)
+                implementation(Libs.Coroutines.NATIVE.full)
             }
         }
     }

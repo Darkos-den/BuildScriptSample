@@ -22,7 +22,10 @@ object Libs {
     ) : IDepend {
         CORE("io.ktor:ktor-client-core"),
         SERIALIZATION("io.ktor:ktor-client-serialization"),
+        SERIALIZATION_JVM("io.ktor:ktor-client-serialization-jvm"),
         LOGGING("io.ktor:ktor-client-logging"),
+        LOGGING_JVM("io.ktor:ktor-client-logging-jvm"),
+        OK_HTTP("io.ktor:ktor-client-okhttp"),
         ANDROID("io.ktor:ktor-client-android");
 
         override val version = Versions.ktor
@@ -35,8 +38,9 @@ object Libs {
             ).toTypedArray()
 
             val defaultAndroid = listOf(
-                implementation(CORE),
-                implementation(ANDROID)
+                implementation(OK_HTTP),
+                implementation(SERIALIZATION_JVM),
+                implementation(LOGGING_JVM)
             ).toTypedArray()
         }
     }

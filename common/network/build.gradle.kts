@@ -2,11 +2,15 @@ import config.depends.apply
 import config.depends.implementation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
-val deps = listOf(
+val commonDeps = listOf(
     implementation(Libs.Kotlin.STDLIB),
     *Libs.Ktor.defaultCommon,
     implementation(Libs.Coroutines.COMMON),
     implementation(Libs.Serialization.COMMON)
+)
+
+val androidDeps = listOf(
+    *Libs.Ktor.defaultAndroid
 )
 
 plugins {
@@ -39,18 +43,13 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                deps.apply(this)
+                commonDeps.apply(this)
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation(Ktor.clientOkttp)
-                implementation(Ktor.clientSerializationJvm)
-                implementation(Ktor.clientLoggingJvm)
-
-                implementation(Coroutines.android)
-                implementation(Serialization.runtime)
+                androidDeps.apply(this)
             }
         }
 
@@ -62,19 +61,6 @@ kotlin {
 
                 implementation(Coroutines.native)
                 implementation(Serialization.native)
-            }
-        }
-
-        val commonTest by getting {
-            dependencies {
-                implementation(Kotlin.testCommon)
-                implementation(Kotlin.testAnnotationsCommon)
-            }
-        }
-
-        val androidTest by getting {
-            dependencies {
-                implementation(Kotlin.testJunit)
             }
         }
     }
