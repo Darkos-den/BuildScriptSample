@@ -1,5 +1,3 @@
-package config
-
 object Versions {
 
     object Project {

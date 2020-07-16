@@ -1,4 +1,4 @@
-import config.depends.apply
+import config.depends.applyDependencies
 import config.depends.implementation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
@@ -13,9 +13,15 @@ val androidDeps = listOf(
     *Libs.Ktor.defaultAndroid
 )
 
+val iosDeps = listOf(
+    implementation(Libs.Coroutines.NATIVE),
+    implementation(Libs.Serialization.NATIVE),
+    *Libs.Ktor.defaultIos
+)
+
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version (Kotlin.version)
+    kotlin("plugin.serialization") version (Versions.kotlin)
 
     id("com.android.library")
     id("app-config-android")
@@ -43,24 +49,19 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                commonDeps.apply(this)
+                applyDependencies(commonDeps)
             }
         }
 
         val androidMain by getting {
             dependencies {
-                androidDeps.apply(this)
+                applyDependencies(androidDeps)
             }
         }
 
         val iosMain by getting {
             dependencies {
-                implementation(Ktor.clientIos)
-                implementation(Ktor.clientSerializationIos)
-                implementation(Ktor.clientLoggingIos)
-
-                implementation(Coroutines.native)
-                implementation(Serialization.native)
+                applyDependencies(iosDeps)
             }
         }
     }

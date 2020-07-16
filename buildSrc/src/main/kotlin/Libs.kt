@@ -1,4 +1,3 @@
-import config.Versions
 import config.depends.IDepend
 import config.depends.implementation
 
@@ -23,9 +22,12 @@ object Libs {
         CORE("io.ktor:ktor-client-core"),
         SERIALIZATION("io.ktor:ktor-client-serialization"),
         SERIALIZATION_JVM("io.ktor:ktor-client-serialization-jvm"),
+        SERIALIZATION_NATIVE("io.ktor:ktor-client-serialization-native"),
         LOGGING("io.ktor:ktor-client-logging"),
         LOGGING_JVM("io.ktor:ktor-client-logging-jvm"),
+        LOGGING_IOS("io.ktor:ktor-client-logging-native"),
         OK_HTTP("io.ktor:ktor-client-okhttp"),
+        IOS("io.ktor:ktor-client-ios"),
         ANDROID("io.ktor:ktor-client-android");
 
         override val version = Versions.ktor
@@ -41,6 +43,12 @@ object Libs {
                 implementation(OK_HTTP),
                 implementation(SERIALIZATION_JVM),
                 implementation(LOGGING_JVM)
+            ).toTypedArray()
+
+            val defaultIos = listOf(
+                implementation(IOS),
+                implementation(SERIALIZATION_NATIVE),
+                implementation(LOGGING_IOS)
             ).toTypedArray()
         }
     }

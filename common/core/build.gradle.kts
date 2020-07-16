@@ -1,4 +1,4 @@
-import config.depends.apply
+import config.depends.applyDependencies
 import config.depends.implementation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
@@ -36,7 +36,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                commonDeps.apply(this)
+                applyDependencies(commonDeps)
                 implementation(project(":common:repository"))
             }
         }

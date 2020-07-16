@@ -1,6 +1,5 @@
 import com.android.build.gradle.BaseExtension
 import org.gradle.api.Project
-import config.Versions
 
 val Project.android: BaseExtension
     get() = extensions.findByName("android") as? BaseExtension

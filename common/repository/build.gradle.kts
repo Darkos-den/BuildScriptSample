@@ -31,33 +31,20 @@ kotlin {
             dependencies {
                 implementation(project(":common:network"))
 
-                implementation(Kotlin.stdlib)
-                implementation(Coroutines.common)
+                implementation(Libs.Kotlin.STDLIB.full)
+                implementation(Libs.Coroutines.COMMON.full)
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation(Coroutines.android)
+                implementation(Libs.Coroutines.ANDROID.full)
             }
         }
 
         val iosMain by getting {
             dependencies {
-                implementation(Coroutines.native)
-            }
-        }
-
-        val commonTest by getting {
-            dependencies {
-                implementation(Kotlin.testCommon)
-                implementation(Kotlin.testAnnotationsCommon)
-            }
-        }
-
-        val androidTest by getting {
-            dependencies {
-                implementation(Kotlin.testJunit)
+                implementation(Libs.Coroutines.NATIVE.full)
             }
         }
     }

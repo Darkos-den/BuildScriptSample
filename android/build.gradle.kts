@@ -1,4 +1,4 @@
-import config.depends.apply
+import config.depends.applyDependencies
 import config.depends.implementation
 
 plugins {
@@ -40,13 +40,13 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = config.Versions.AndroidX.composeCompiler
-        kotlinCompilerExtensionVersion = config.Versions.AndroidX.compose
+        kotlinCompilerVersion = Versions.AndroidX.composeCompiler
+        kotlinCompilerExtensionVersion = Versions.AndroidX.compose
     }
 }
 
 dependencies {
-    deps.apply(this)
+    applyDependencies(deps)
 
     implementation(project(":common:core"))
 }
