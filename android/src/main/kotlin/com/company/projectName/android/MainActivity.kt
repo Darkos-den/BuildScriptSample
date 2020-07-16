@@ -1,17 +1,16 @@
-package com.dynamax.projectName.android
+package com.company.projectName.android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.ui.core.Modifier
-import androidx.ui.core.TestTag
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Text
 import androidx.ui.layout.padding
 import androidx.ui.material.MaterialTheme
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.dynamax.core.Core
+import com.company.core.Core
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {

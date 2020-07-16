@@ -1,6 +1,6 @@
-package com.dynamax.network.service
+package com.company.network.service
 
-import com.dynamax.network.client.HttpClient
+import com.company.network.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import kotlinx.coroutines.withContext

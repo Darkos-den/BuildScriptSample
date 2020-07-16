@@ -1,6 +1,6 @@
-package com.dynamax.projectName.repository
+package com.company.projectName.repository
 
-import com.dynamax.network.service.TodoService
+import com.company.network.service.TodoService
 import kotlin.coroutines.CoroutineContext
 
 

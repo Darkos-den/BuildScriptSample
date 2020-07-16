@@ -1,4 +1,4 @@
-package com.dynamax.network.client
+package com.company.network.client
 
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature

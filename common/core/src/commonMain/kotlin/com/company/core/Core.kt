@@ -1,7 +1,7 @@
-package com.dynamax.core
+package com.company.core
 
-import com.dynamax.core.utils.CoroutinesDispatcher
-import com.dynamax.projectName.repository.TodoRepository
+import com.company.core.utils.CoroutinesDispatcher
+import com.company.projectName.repository.TodoRepository
 
 class Core {
     suspend fun getTodo(): String {

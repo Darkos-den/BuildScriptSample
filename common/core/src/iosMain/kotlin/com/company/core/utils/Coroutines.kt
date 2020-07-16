@@ -1,4 +1,4 @@
-package com.dynamax.core.utils
+package com.company.core.utils
 
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CoroutineDispatcher
