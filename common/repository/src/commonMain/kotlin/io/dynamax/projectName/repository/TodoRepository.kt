@@ -1,4 +1,4 @@
-package io.dynamax.repository
+package io.dynamax.projectName.repository
 
 import io.dynamax.network.service.TodoService
 import kotlin.coroutines.CoroutineContext

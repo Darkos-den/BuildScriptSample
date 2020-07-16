@@ -24,8 +24,7 @@ fun Project.applyMultiPlatformSourceSets(){
     android.run {
         sourceSets {
             getByName("main").apply {
-                manifest.srcFile("src/androidMain/AndroidManifest.xml")
-                java.srcDirs("src/androidMain/kotlin")
+                setRoot("src/androidMain")
             }
         }
     }

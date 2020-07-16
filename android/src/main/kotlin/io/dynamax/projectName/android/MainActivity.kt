@@ -1,4 +1,4 @@
-package io.dynamax.android
+package io.dynamax.projectName.android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

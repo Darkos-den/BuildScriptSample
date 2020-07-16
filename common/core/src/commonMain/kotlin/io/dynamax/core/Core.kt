@@ -1,7 +1,7 @@
 package io.dynamax.core
 
 import io.dynamax.core.utils.CoroutinesDispatcher
-import io.dynamax.repository.TodoRepository
+import io.dynamax.projectName.repository.TodoRepository
 
 class Core {
     suspend fun getTodo(): String {
