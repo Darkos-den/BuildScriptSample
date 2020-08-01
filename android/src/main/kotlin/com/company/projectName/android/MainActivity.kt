@@ -2,44 +2,84 @@ package com.company.projectName.android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.Composable
-import androidx.ui.core.Modifier
+import androidx.compose.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Text
-import androidx.ui.layout.padding
+import androidx.ui.graphics.Color
 import androidx.ui.material.MaterialTheme
+import androidx.ui.material.Scaffold
+import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.company.core.Core
-import kotlinx.coroutines.runBlocking
+import com.company.projectName.android.view.IContext
+import com.company.projectName.android.view.Initial
 
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel: ViewModel by lazy {
+        ViewModel()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        runBlocking {
-            val result = Core().getTodo()
-            runOnUiThread {
-                setContent {
-                    MaterialTheme {
-                        MainView(result)
-                    }
-                }
-            }
+        setContent {
+            App(model = viewModel)
         }
     }
 }
 
 @Composable
-fun MainView(todo: String) {
-    Text(
-        modifier = Modifier.padding(8.dp),
-        text = todo
+fun App(model: ViewModel) {
+    MaterialTheme {
+        Scaffold(topAppBar = { MyAppBar() }) {
+            // observe the viewmodel here. compose will recompose when it changes.
+            val viewState = observe(model.viewState)
+            viewState?.draw()
+        }
+    }
+}
+
+@Composable
+fun MyAppBar() {
+    TopAppBar(
+        title = {
+            Text(
+                text = "My app"
+            )
+        },
+        backgroundColor = Color.Blue,
+        contentColor = Color.White,
+        elevation = 12.dp
     )
+}
+
+val stubContext = object: IContext{
+    override fun onInvalidateClick() {
+        //do nothing
+    }
 }
 
 @Preview
 @Composable
-fun preview(){
-    MainView("test")
+fun preview() {
+    MaterialTheme {
+        Scaffold(topAppBar = { MyAppBar() }) {
+            Initial(stubContext).draw()
+        }
+    }
+}
+
+@Composable
+fun <T> observe(data: LiveData<T>): T? {
+    var result by state { data.value }
+    val observer = remember { Observer<T> { result = it } }
+
+    onCommit(data) {
+        data.observeForever(observer)
+        onDispose { data.removeObserver(observer) }
+    }
+
+    return result
 }
