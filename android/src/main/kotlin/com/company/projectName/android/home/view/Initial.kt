@@ -1,4 +1,4 @@
-package com.company.projectName.android.view
+package com.company.projectName.android.home.view
 
 import androidx.compose.Composable
 import androidx.ui.core.Modifier

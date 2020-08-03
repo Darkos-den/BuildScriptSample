@@ -1,4 +1,4 @@
-package com.company.projectName.android
+package com.company.projectName.android.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -14,28 +14,33 @@ import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.company.projectName.android.view.Initial
+import com.company.projectName.android.home.view.Initial
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: ViewModel by lazy {
-        ViewModel()
+    @ExperimentalStdlibApi
+    private val presenter: Presenter by lazy {
+        Presenter()
     }
 
+    @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            App(model = viewModel)
+        presenter.viewState.observeForever {
+            setContent {
+                App(it)
+            }
         }
     }
 }
 
+@ExperimentalStdlibApi
 @Composable
-fun App(model: ViewModel) {
+fun App(state: @Composable() ()->Unit) {
     MaterialTheme {
         Scaffold(topAppBar = { MyAppBar() }) {
             // observe the viewmodel here. compose will recompose when it changes.
-            model.viewState.observeAsState()
+            state()
         }
     }
 }
@@ -62,4 +67,17 @@ fun preview() {
             Initial()
         }
     }
+}
+
+@Composable
+fun <T> observe(data: LiveData<T>): T? {
+    var result by state { data.value }
+    val observer = remember { Observer<T> { result = it } }
+
+    onCommit(data) {
+        data.observeForever(observer)
+        onDispose { data.removeObserver(observer) }
+    }
+
+    return result
 }
