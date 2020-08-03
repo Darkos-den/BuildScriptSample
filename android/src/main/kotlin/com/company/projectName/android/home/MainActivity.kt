@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         presenter.viewState.observeForever {
             setContent {
-                App(it)
+                App(it.draw)
             }
         }
     }

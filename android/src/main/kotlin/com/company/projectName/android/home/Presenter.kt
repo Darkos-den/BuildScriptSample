@@ -10,18 +10,16 @@ import com.company.projectName.android.home.view.Invalidatable
 import com.company.projectName.android.home.view.Progress
 import kotlinx.coroutines.delay
 
-typealias State = @Composable() () -> Unit
-
 @ExperimentalStdlibApi
 class Presenter : Component {
 
-    private var currentState: State = { Initial() }
+    private var currentState: Drawer = Drawer { Initial() }
         set(value) {
             field = value
             viewStateSource.postValue(value)
         }
-    private val viewStateSource = MutableLiveData<State>()
-    val viewState: LiveData<State> = viewStateSource
+    private val viewStateSource = MutableLiveData<Drawer>()
+    val viewState: LiveData<Drawer> = viewStateSource
 
     private val program: Program by lazy {
         Program()
@@ -73,29 +71,30 @@ class Presenter : Component {
 
     override fun render(state: ScreenState) {
         val state = state as HomeScreenState
-        currentState = generateState(state)
+        currentState = Drawer {
+            generateState(state)
+        }
     }
 
-    private fun generateState(state: HomeScreenState): @Composable() () -> Unit {
-        return {
-            when (state) {
-                is HomeScreenState.Initial -> {
-                    Initial()
-                }
-                is HomeScreenState.Invalidatable -> {
-                    Invalidatable(
-                        oldState = {
-                            render(state.oldState)
-                        }, onClick = this::onInvalidateClick
-                    )
-                }
-                is HomeScreenState.Data -> {
-                    Data(data = state.data)
-                }
-                is HomeScreenState.Progress -> {
-                    Progress {
+    @Composable
+    private fun generateState(state: HomeScreenState) {
+        when (state) {
+            is HomeScreenState.Initial -> {
+                Initial()
+            }
+            is HomeScreenState.Invalidatable -> {
+                Invalidatable(
+                    oldState = {
                         render(state.oldState)
-                    }
+                    }, onClick = this::onInvalidateClick
+                )
+            }
+            is HomeScreenState.Data -> {
+                Data(data = state.data)
+            }
+            is HomeScreenState.Progress -> {
+                Progress {
+                    render(state.oldState)
                 }
             }
         }
