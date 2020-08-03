@@ -8,21 +8,13 @@ import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.padding
 import androidx.ui.unit.dp
 
-class Data(
-    context: IContext,
-    private val data: String
-): State(context) {
-
-    override val coreState = this
-
-    @Composable
-    override fun draw() {
-        Text(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .fillMaxHeight(),
-            text = data
-        )
-    }
+@Composable
+fun Data(data: String) {
+    Text(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        text = data
+    )
 }

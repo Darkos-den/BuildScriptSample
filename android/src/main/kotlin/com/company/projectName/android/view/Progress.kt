@@ -9,23 +9,15 @@ import androidx.ui.layout.fillMaxHeight
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.material.CircularProgressIndicator
 
-class Progress(
-    context: IContext,
-    private val oldState: State
-) : State(context) {
+@Composable
+fun Progress(oldState: @Composable() () -> Unit) {
+    oldState()
 
-    override val coreState = oldState
-
-    @Composable
-    override fun draw() {
-        oldState.draw()
-
-        Column(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-            verticalArrangement = Arrangement.Center,
-            horizontalGravity = Alignment.CenterHorizontally
-        ) {
-            CircularProgressIndicator()
-        }
+    Column(
+        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+        verticalArrangement = Arrangement.Center,
+        horizontalGravity = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator()
     }
 }

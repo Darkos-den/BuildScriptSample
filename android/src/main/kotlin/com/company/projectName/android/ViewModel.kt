@@ -1,5 +1,6 @@
 package com.company.projectName.android
 
+import androidx.compose.Composable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.company.projectName.android.view.*
@@ -8,9 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ViewModel : IContext {
+typealias State = @Composable() () -> Unit
 
-    private var currentState: State = Initial(this)
+class ViewModel {
+
+    private var currentState: State = { Initial() }
         set(value) {
             field = value
             viewStateSource.postValue(value)
@@ -24,21 +27,13 @@ class ViewModel : IContext {
 
     private fun invalidateData() {
         CoroutineScope(Dispatchers.IO).launch {
-            Progress(this@ViewModel, currentState.coreState).let {
-                currentState = it
-            }
+            val oldState = currentState
+            currentState = { Progress { oldState() } }
 
             delay(4000)//todo: for test
 
-            Data(this@ViewModel, "data data data data").let {
-                Invalidatable(this@ViewModel, it)
-            }.let {
-                currentState = it
-            }
+            val dataArg = "data data data data"
+            currentState = { Invalidatable({ Data(dataArg) }, this@ViewModel::invalidateData) }
         }
-    }
-
-    override fun onInvalidateClick() {
-        invalidateData()
     }
 }

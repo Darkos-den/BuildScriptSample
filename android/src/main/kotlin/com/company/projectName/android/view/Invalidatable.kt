@@ -11,29 +11,24 @@ import androidx.ui.layout.fillMaxWidth
 import androidx.ui.material.Button
 import androidx.ui.material.CircularProgressIndicator
 
-class Invalidatable(
-    context: IContext,
-    private val oldState: State
-) : State(context) {
-
-    override val coreState = oldState
-
-    @Composable
-    override fun draw() {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-        ) {
-            Button(
-                text = {
-                    Text(text = "Invalidate")
-                },
-                onClick = {
-                    context.onInvalidateClick()
-                }
-            )
-            oldState.draw()
-        }
+@Composable
+fun Invalidatable(
+    oldState: @Composable() () -> Unit,
+    onClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
+        Button(
+            text = {
+                Text(text = "Invalidate")
+            },
+            onClick = {
+                onClick()
+            }
+        )
+        oldState()
     }
 }

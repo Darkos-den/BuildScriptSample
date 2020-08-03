@@ -8,20 +8,13 @@ import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.padding
 import androidx.ui.unit.dp
 
-class Initial(
-    context: IContext
-): State(context) {
-
-    override val coreState = this
-
-    @Composable
-    override fun draw() {
-        Text(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .fillMaxHeight(),
-            text = "Loading in progress"
-        )
-    }
+@Composable
+fun Initial() {
+    Text(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        text = "Loading in progress"
+    )
 }
