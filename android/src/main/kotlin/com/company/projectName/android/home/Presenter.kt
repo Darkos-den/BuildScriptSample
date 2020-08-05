@@ -31,35 +31,6 @@ class Presenter : Component {
         program.accept(HomeMsg.InvalidateClick)
     }
 
-    private fun processInvalidateClick(state: ScreenState): ScreenCmdData {
-        return when (state) {
-            is HomeScreenState.Invalidatable -> state.oldState
-            else -> state
-        }.let {
-            ScreenCmdData(
-                state = HomeScreenState.Progress(it),
-                cmd = HomeCmd.InvalidateData
-            )
-        }
-    }
-
-    private fun processNewDataReceived(
-        state: ScreenState,
-        msg: HomeMsg.NewDataReceived
-    ): ScreenCmdData {
-        return when (state) {
-            is HomeScreenState.Progress -> state.oldState
-            else -> state
-        }.let {
-            HomeScreenState.Data(msg.data).let {
-                ScreenCmdData(
-                    state = HomeScreenState.Invalidatable(it),
-                    cmd = None()
-                )
-            }
-        }
-    }
-
     @Composable
     private fun generateState(state: HomeScreenState) {
         when (state) {
@@ -93,10 +64,10 @@ class Presenter : Component {
     override fun update(state: ScreenState, msg: Msg): ScreenCmdData {
         return when (msg) {
             is HomeMsg.InvalidateClick -> {
-                processInvalidateClick(state)
+                (state as HomeScreenState).processInvalidateClick()
             }
             is HomeMsg.NewDataReceived -> {
-                processNewDataReceived(state, msg)
+                (state as HomeScreenState).processNewDataReceived(state, msg)
             }
             else -> {
                 ScreenCmdData(
