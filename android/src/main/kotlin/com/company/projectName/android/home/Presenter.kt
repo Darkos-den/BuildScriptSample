@@ -85,7 +85,7 @@ class Presenter : Component {
             is HomeScreenState.Invalidatable -> {
                 Invalidatable(
                     oldState = {
-                        render(state.oldState)
+                        generateState(state.oldState as HomeScreenState)
                     }, onClick = this::onInvalidateClick
                 )
             }
@@ -94,7 +94,7 @@ class Presenter : Component {
             }
             is HomeScreenState.Progress -> {
                 Progress {
-                    render(state.oldState)
+                    generateState(state.oldState as HomeScreenState)
                 }
             }
         }
@@ -105,7 +105,7 @@ class Presenter : Component {
 
         return when (cmd) {
             is HomeCmd.InvalidateData -> {
-                delay(10000)//todo: for test
+                delay(4000)//todo: for test
 
                 HomeMsg.NewDataReceived(
                     data = "data data data data data data data data data"

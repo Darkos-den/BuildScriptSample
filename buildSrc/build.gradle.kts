@@ -1,5 +1,5 @@
 val kotlinVersion = "1.3.72"
-val gradleVersion = "4.2.0-alpha04"
+val gradleVersion = "4.2.0-alpha05"
 
 plugins {
     `kotlin-dsl`
