@@ -3,10 +3,7 @@ package com.company.projectName.android.home
 import androidx.compose.Composable
 import com.company.projectName.android.base.LiveUpdatable
 import com.company.projectName.android.base.mvu.*
-import com.company.projectName.android.home.view.Data
-import com.company.projectName.android.home.view.Initial
-import com.company.projectName.android.home.view.Invalidatable
-import com.company.projectName.android.home.view.Progress
+import com.company.projectName.android.home.view.*
 import kotlinx.coroutines.delay
 
 typealias ViewState = @Composable() () -> Unit
@@ -22,6 +19,12 @@ class Presenter : Component {
         Program()
     }
 
+    private val viewGenerator: ViewGenerator by lazy {
+        ViewGenerator(
+            onInvalidate = this::onInvalidateClick
+        )
+    }
+
     init {
         program.init(
             initialState = HomeScreenState.Initial,
@@ -29,30 +32,6 @@ class Presenter : Component {
         )
 
         program.accept(HomeMsg.InvalidateClick)
-    }
-
-    @Composable
-    private fun generateState(state: HomeScreenState) {
-        when (state) {
-            is HomeScreenState.Initial -> {
-                Initial()
-            }
-            is HomeScreenState.Invalidatable -> {
-                Invalidatable(
-                    oldState = {
-                        generateState(state.oldState as HomeScreenState)
-                    }, onClick = this::onInvalidateClick
-                )
-            }
-            is HomeScreenState.Data -> {
-                Data(data = state.data)
-            }
-            is HomeScreenState.Progress -> {
-                Progress {
-                    generateState(state.oldState as HomeScreenState)
-                }
-            }
-        }
     }
 
     private fun onInvalidateClick() {
@@ -79,16 +58,13 @@ class Presenter : Component {
     }
 
     override fun render(state: ScreenState) {
-        val state = state as HomeScreenState
         viewState.set {
-            generateState(state)
+            viewGenerator.generateState(state as HomeScreenState)
         }
     }
 
     override suspend fun call(cmd: Cmd): Msg {
-        val cmd = cmd as HomeCmd
-
-        return when (cmd) {
+        return when (cmd as HomeCmd) {
             is HomeCmd.InvalidateData -> {
                 delay(4000)//todo: for test
 
