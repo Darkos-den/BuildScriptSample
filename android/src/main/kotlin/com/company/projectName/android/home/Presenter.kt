@@ -31,45 +31,32 @@ class Presenter : Component {
         program.accept(HomeMsg.InvalidateClick)
     }
 
-    override fun update(state: ScreenState, msg: Msg): ScreenCmdData {
-        return when (msg) {
-            is HomeMsg.InvalidateClick -> {
-                when (state) {
-                    is HomeScreenState.Invalidatable -> state.oldState
-                    else -> state
-                }.let {
-                    ScreenCmdData(
-                        state = HomeScreenState.Progress(it),
-                        cmd = HomeCmd.InvalidateData
-                    )
-                }
-            }
-            is HomeMsg.NewDataReceived -> {
-                when (state) {
-                    is HomeScreenState.Progress -> state.oldState
-                    else -> state
-                }.let {
-                    HomeScreenState.Data(msg.data).let {
-                        ScreenCmdData(
-                            state = HomeScreenState.Invalidatable(it),
-                            cmd = None()
-                        )
-                    }
-                }
-            }
-            else -> {
-                ScreenCmdData(
-                    state = state,
-                    cmd = None()
-                )
-            }
+    private fun processInvalidateClick(state: ScreenState): ScreenCmdData {
+        return when (state) {
+            is HomeScreenState.Invalidatable -> state.oldState
+            else -> state
+        }.let {
+            ScreenCmdData(
+                state = HomeScreenState.Progress(it),
+                cmd = HomeCmd.InvalidateData
+            )
         }
     }
 
-    override fun render(state: ScreenState) {
-        val state = state as HomeScreenState
-        viewState.set {
-            generateState(state)
+    private fun processNewDataReceived(
+        state: ScreenState,
+        msg: HomeMsg.NewDataReceived
+    ): ScreenCmdData {
+        return when (state) {
+            is HomeScreenState.Progress -> state.oldState
+            else -> state
+        }.let {
+            HomeScreenState.Data(msg.data).let {
+                ScreenCmdData(
+                    state = HomeScreenState.Invalidatable(it),
+                    cmd = None()
+                )
+            }
         }
     }
 
@@ -97,6 +84,36 @@ class Presenter : Component {
         }
     }
 
+    private fun onInvalidateClick() {
+        program.accept(HomeMsg.InvalidateClick)
+    }
+
+    //region Component
+
+    override fun update(state: ScreenState, msg: Msg): ScreenCmdData {
+        return when (msg) {
+            is HomeMsg.InvalidateClick -> {
+                processInvalidateClick(state)
+            }
+            is HomeMsg.NewDataReceived -> {
+                processNewDataReceived(state, msg)
+            }
+            else -> {
+                ScreenCmdData(
+                    state = state,
+                    cmd = None()
+                )
+            }
+        }
+    }
+
+    override fun render(state: ScreenState) {
+        val state = state as HomeScreenState
+        viewState.set {
+            generateState(state)
+        }
+    }
+
     override suspend fun call(cmd: Cmd): Msg {
         val cmd = cmd as HomeCmd
 
@@ -111,7 +128,5 @@ class Presenter : Component {
         }
     }
 
-    private fun onInvalidateClick() {
-        program.accept(HomeMsg.InvalidateClick)
-    }
+    //endregion
 }
