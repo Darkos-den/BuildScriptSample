@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.viewState.observe(this, Observer {
+        presenter.viewState.liveValue.observe(this, Observer {
             setContent {
                 App(it)
             }

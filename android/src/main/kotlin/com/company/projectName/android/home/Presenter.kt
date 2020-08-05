@@ -1,8 +1,7 @@
 package com.company.projectName.android.home
 
 import androidx.compose.Composable
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.company.projectName.android.base.LiveUpdatable
 import com.company.projectName.android.base.mvu.*
 import com.company.projectName.android.home.view.Data
 import com.company.projectName.android.home.view.Initial
@@ -10,18 +9,14 @@ import com.company.projectName.android.home.view.Invalidatable
 import com.company.projectName.android.home.view.Progress
 import kotlinx.coroutines.delay
 
-typealias ViewState = @Composable() ()->Unit
+typealias ViewState = @Composable() () -> Unit
 
 @ExperimentalStdlibApi
 class Presenter : Component {
 
-    private var currentState: ViewState = { Initial() }
-        set(value) {
-            field = value
-            viewStateSource.postValue(value)
-        }
-    private val viewStateSource = MutableLiveData<ViewState>()
-    val viewState: LiveData<ViewState> = viewStateSource
+    val viewState = LiveUpdatable<ViewState>(
+        initialState = { Initial() }
+    )
 
     private val program: Program by lazy {
         Program()
@@ -73,7 +68,7 @@ class Presenter : Component {
 
     override fun render(state: ScreenState) {
         val state = state as HomeScreenState
-        currentState = {
+        viewState.set {
             generateState(state)
         }
     }
