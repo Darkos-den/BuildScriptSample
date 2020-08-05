@@ -1,7 +1,6 @@
 package com.company.projectName.android.home
 
-import androidx.compose.Composable
-import com.company.projectName.android.base.*
+import com.company.projectName.android.base.mvu.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel

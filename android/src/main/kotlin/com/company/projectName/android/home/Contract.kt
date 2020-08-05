@@ -1,8 +1,8 @@
 package com.company.projectName.android.home
 
-import com.company.projectName.android.base.Cmd
-import com.company.projectName.android.base.Msg
-import com.company.projectName.android.base.ScreenState
+import com.company.projectName.android.base.mvu.Cmd
+import com.company.projectName.android.base.mvu.Msg
+import com.company.projectName.android.base.mvu.ScreenState
 
 sealed class HomeCmd : Cmd() {
     object InvalidateData : HomeCmd()

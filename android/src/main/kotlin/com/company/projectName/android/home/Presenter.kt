@@ -3,7 +3,7 @@ package com.company.projectName.android.home
 import androidx.compose.Composable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.company.projectName.android.base.*
+import com.company.projectName.android.base.mvu.*
 import com.company.projectName.android.home.view.Data
 import com.company.projectName.android.home.view.Initial
 import com.company.projectName.android.home.view.Invalidatable
