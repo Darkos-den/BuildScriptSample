@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Text
 import androidx.ui.graphics.Color
-import androidx.ui.livedata.observeAsState
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
@@ -26,17 +25,17 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.viewState.observeForever {
+        presenter.viewState.observe(this, Observer {
             setContent {
-                App(it.draw)
+                App(it)
             }
-        }
+        })
     }
 }
 
 @ExperimentalStdlibApi
 @Composable
-fun App(state: @Composable() ()->Unit) {
+fun App(state: @Composable() () -> Unit) {
     MaterialTheme {
         Scaffold(topAppBar = { MyAppBar() }) {
             // observe the viewmodel here. compose will recompose when it changes.
@@ -67,17 +66,4 @@ fun preview() {
             Initial()
         }
     }
-}
-
-@Composable
-fun <T> observe(data: LiveData<T>): T? {
-    var result by state { data.value }
-    val observer = remember { Observer<T> { result = it } }
-
-    onCommit(data) {
-        data.observeForever(observer)
-        onDispose { data.removeObserver(observer) }
-    }
-
-    return result
 }

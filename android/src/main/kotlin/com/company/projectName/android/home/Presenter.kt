@@ -10,16 +10,18 @@ import com.company.projectName.android.home.view.Invalidatable
 import com.company.projectName.android.home.view.Progress
 import kotlinx.coroutines.delay
 
+typealias ViewState = @Composable() ()->Unit
+
 @ExperimentalStdlibApi
 class Presenter : Component {
 
-    private var currentState: Drawer = Drawer { Initial() }
+    private var currentState: ViewState = { Initial() }
         set(value) {
             field = value
             viewStateSource.postValue(value)
         }
-    private val viewStateSource = MutableLiveData<Drawer>()
-    val viewState: LiveData<Drawer> = viewStateSource
+    private val viewStateSource = MutableLiveData<ViewState>()
+    val viewState: LiveData<ViewState> = viewStateSource
 
     private val program: Program by lazy {
         Program()
@@ -71,7 +73,7 @@ class Presenter : Component {
 
     override fun render(state: ScreenState) {
         val state = state as HomeScreenState
-        currentState = Drawer {
+        currentState = {
             generateState(state)
         }
     }
