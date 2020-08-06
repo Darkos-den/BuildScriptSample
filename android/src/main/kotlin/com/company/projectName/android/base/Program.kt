@@ -1,4 +1,4 @@
-package com.company.projectName.android.home
+package com.company.projectName.android.base
 
 import com.company.projectName.android.base.mvu.*
 import kotlinx.coroutines.CoroutineScope
