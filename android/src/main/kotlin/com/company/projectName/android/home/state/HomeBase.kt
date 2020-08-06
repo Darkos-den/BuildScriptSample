@@ -8,27 +8,21 @@ import com.company.projectName.android.base.mvu.ScreenCmdData
 import com.company.projectName.android.home.HomeCmd
 import com.company.projectName.android.home.HomeMsg
 
-interface IBehavior<Data : StateData, State : HomeBase<Data>> : StateBehavior {
-
-    fun processInvalidateClick(currentState: State): ScreenCmdData {
-        return HomeBase.BaseBehavior.processInvalidateClick(currentState)
-    }
-
-    fun processNewDataReceived(
-        currentState: State,
-        msg: HomeMsg.NewDataReceived
-    ): ScreenCmdData {
-        return HomeBase.BaseBehavior.processNewDataReceived(currentState, msg)
-    }
-}
-
 abstract class HomeBase<Data : StateData>(
     data: Data,
-    behavior: IBehavior<Data, HomeBase<Data>> = BaseBehavior
-) : BaseState<Data, HomeBase.IBehavior<Data>>(
+    behavior: IBehavior = BaseBehavior()
+) : BaseState<Data, HomeBase.IBehavior>(
     data = data,
     behavior = behavior
 ) {
+
+    interface IBehavior : StateBehavior {
+        fun processInvalidateClick(currentState: HomeBase<*>): ScreenCmdData
+        fun processNewDataReceived(
+            currentState: HomeBase<*>,
+            msg: HomeMsg.NewDataReceived
+        ): ScreenCmdData
+    }
 
     fun processMsg(msg: HomeMsg): ScreenCmdData {
         return when (msg) {
@@ -37,9 +31,9 @@ abstract class HomeBase<Data : StateData>(
         }
     }
 
-    open class BaseBehavior<Data : StateData, State : HomeBase<Data>> : IBehavior<Data, State> {
+    open class BaseBehavior : IBehavior {
 
-        override fun processInvalidateClick(currentState: State): ScreenCmdData {
+        override fun processInvalidateClick(currentState: HomeBase<*>): ScreenCmdData {
             return ScreenCmdData(
                 state = HomeProgress.Data(
                     oldState = currentState
@@ -51,7 +45,7 @@ abstract class HomeBase<Data : StateData>(
         }
 
         override fun processNewDataReceived(
-            currentState: State,
+            currentState: HomeBase<*>,
             msg: HomeMsg.NewDataReceived
         ): ScreenCmdData {
             return ScreenCmdData(

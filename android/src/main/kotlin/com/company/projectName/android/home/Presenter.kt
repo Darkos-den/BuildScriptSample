@@ -3,6 +3,7 @@ package com.company.projectName.android.home
 import androidx.compose.Composable
 import com.company.projectName.android.base.LiveUpdatable
 import com.company.projectName.android.base.mvu.*
+import com.company.projectName.android.home.state.*
 import com.company.projectName.android.home.view.Data
 import com.company.projectName.android.home.view.Initial
 import com.company.projectName.android.home.view.Invalidatable
@@ -24,94 +25,59 @@ class Presenter : Component {
 
     init {
         program.init(
-            initialState = HomeScreenState.Initial,
+            initialState = HomeInitial,
             component = this
         )
 
         program.accept(HomeMsg.InvalidateClick)
     }
 
-    private fun processInvalidateClick(state: ScreenState): ScreenCmdData {
-        return when (state) {
-            is HomeScreenState.Invalidatable -> state.oldState
-            else -> state
-        }.let {
-            ScreenCmdData(
-                state = HomeScreenState.Progress(it),
-                cmd = HomeCmd.InvalidateData
-            )
-        }
-    }
+    //region UiProcessor
 
-    private fun processNewDataReceived(
-        state: ScreenState,
-        msg: HomeMsg.NewDataReceived
-    ): ScreenCmdData {
-        return when (state) {
-            is HomeScreenState.Progress -> state.oldState
-            else -> state
-        }.let {
-            HomeScreenState.Data(msg.data).let {
-                ScreenCmdData(
-                    state = HomeScreenState.Invalidatable(it),
-                    cmd = None()
-                )
-            }
+    override fun render(state: ScreenState) {
+        viewState.set {
+            generateState(state as HomeBase<*>)
         }
     }
 
     @Composable
-    private fun generateState(state: HomeScreenState) {
+    private fun generateState(state: HomeBase<*>) {
         when (state) {
-            is HomeScreenState.Initial -> {
+            is HomeInitial -> {
                 Initial()
             }
-            is HomeScreenState.Invalidatable -> {
+            is HomeInvalidatable -> {
                 Invalidatable(
                     oldState = {
-                        generateState(state.oldState as HomeScreenState)
-                    }, onClick = this::onInvalidateClick
+                        generateState(state.data.oldState)
+                    }, onClick = {
+                        program.accept(HomeMsg.InvalidateClick)
+                    }
                 )
             }
-            is HomeScreenState.Data -> {
+            is HomeInfo -> {
                 Data(data = state.data)
             }
-            is HomeScreenState.Progress -> {
+            is HomeProgress -> {
                 Progress {
-                    generateState(state.oldState as HomeScreenState)
+                    generateState(state.data.oldState)
                 }
             }
         }
     }
 
-    private fun onInvalidateClick() {
-        program.accept(HomeMsg.InvalidateClick)
-    }
+    //endregion
 
-    //region Component
+    //region reducer
 
     override fun update(state: ScreenState, msg: Msg): ScreenCmdData {
-        return when (msg) {
-            is HomeMsg.InvalidateClick -> {
-                processInvalidateClick(state)
-            }
-            is HomeMsg.NewDataReceived -> {
-                processNewDataReceived(state, msg)
-            }
-            else -> {
-                ScreenCmdData(
-                    state = state,
-                    cmd = None()
-                )
-            }
-        }
+        state as HomeBase<*>
+        return state.processMsg(msg as HomeMsg)
     }
 
-    override fun render(state: ScreenState) {
-        viewState.set {
-            generateState(state as HomeScreenState)
-        }
-    }
+    //endregion
+
+    //region EffectHandler
 
     override suspend fun call(cmd: Cmd): Msg {
         return when (cmd as HomeCmd) {
