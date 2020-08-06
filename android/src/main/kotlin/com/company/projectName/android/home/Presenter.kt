@@ -108,16 +108,13 @@ class Presenter : Component {
     }
 
     override fun render(state: ScreenState) {
-        val state = state as HomeScreenState
         viewState.set {
-            generateState(state)
+            generateState(state as HomeScreenState)
         }
     }
 
     override suspend fun call(cmd: Cmd): Msg {
-        val cmd = cmd as HomeCmd
-
-        return when (cmd) {
+        return when (cmd as HomeCmd) {
             is HomeCmd.InvalidateData -> {
                 delay(4000)//todo: for test
 
