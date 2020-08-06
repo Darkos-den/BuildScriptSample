@@ -1,9 +1,8 @@
-package com.company.projectName.android.home
+package com.company.projectName.android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.*
-import androidx.lifecycle.LiveData
+import androidx.compose.Composable
 import androidx.lifecycle.Observer
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Text
@@ -13,19 +12,15 @@ import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
+import com.company.projectName.android.home.HomeScreen
 import com.company.projectName.android.home.view.Initial
 
 class MainActivity : AppCompatActivity() {
 
     @ExperimentalStdlibApi
-    private val presenter: Presenter by lazy {
-        Presenter()
-    }
-
-    @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.viewState.liveValue.observe(this, Observer {
+        HomeScreen().presenter.viewState.liveValue.observe(this, Observer {
             setContent {
                 App(it)
             }
