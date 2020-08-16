@@ -9,7 +9,7 @@ import kotlinx.coroutines.delay
 typealias ViewState = @Composable() () -> Unit
 
 @ExperimentalStdlibApi
-class Presenter : Component {
+class Presenter : Component, Reducer, EffectHandler {
 
     val viewState = LiveUpdatable<ViewState>(
         initialState = { Initial() }
@@ -28,7 +28,9 @@ class Presenter : Component {
     init {
         program.init(
             initialState = HomeScreenState.Initial,
-            component = this
+            component = this,
+            reducer = this,
+            effectHandler = this
         )
 
         program.accept(HomeMsg.InvalidateClick)

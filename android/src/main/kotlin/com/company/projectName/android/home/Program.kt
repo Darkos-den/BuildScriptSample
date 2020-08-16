@@ -13,6 +13,8 @@ class Program {
     lateinit var state: ScreenState
         private set
     private lateinit var component: Component
+    private lateinit var reducer: Reducer
+    private lateinit var effectHandler: EffectHandler
 
     private val msgQueue = ArrayDeque<Msg>()
 
@@ -21,7 +23,7 @@ class Program {
     private val job = CoroutineScope(Dispatchers.IO).launch {
         while (true) {
             channel.receive().let {
-                component.update(it.state, it.msg)
+                reducer.update(it.state, it.msg)
             }.also {
                 withContext(Dispatchers.Main) {
                     component.render(it.state)
@@ -39,7 +41,7 @@ class Program {
                 it.cmd !is None
             }?.let {
                 CoroutineScope(Dispatchers.IO).launch {
-                    component.call(it.cmd).let {
+                    effectHandler.call(it.cmd).let {
                         when (it) {
                             is Idle -> Unit
                             else -> msgQueue.addLast(it)
@@ -54,10 +56,14 @@ class Program {
 
     fun init(
         initialState: ScreenState,
-        component: Component
+        component: Component,
+        reducer: Reducer,
+        effectHandler: EffectHandler
     ) {
         state = initialState
         this.component = component
+        this.reducer = reducer
+        this.effectHandler = effectHandler
 
         CoroutineScope(Dispatchers.IO).launch {
             job.join()
