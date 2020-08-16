@@ -20,10 +20,7 @@ class CounterDI(
             effectHandler = CounterEffectHandler(
                 processor = createProcessor()
             ),
-            initialState = CounterState(
-                isProgress = false,
-                counter = 0
-            ),
+            initialState = CounterState.NotActive(0),
             component = component
         )
     }

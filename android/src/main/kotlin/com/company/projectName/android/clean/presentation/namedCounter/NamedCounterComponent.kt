@@ -29,7 +29,7 @@ class NamedCounterComponent(
     }
 
     override fun mapToUiModel(state: ScreenState): NamedUiState {
-        return NamedUiState.fromDomain(state as NamedCounterState)
+        return (state as NamedCounterState).toUiState()
     }
 
     @Composable

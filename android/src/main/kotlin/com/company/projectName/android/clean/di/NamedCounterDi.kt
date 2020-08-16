@@ -25,10 +25,7 @@ class NamedCounterDi(
             ),
             initialState = NamedCounterState(
                 name = "name",
-                counter = CounterState(
-                    isProgress = false,
-                    counter = 0
-                )
+                counter = CounterState.NotActive(0)
             ),
             component = component
         )

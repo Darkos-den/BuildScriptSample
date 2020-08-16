@@ -28,9 +28,7 @@ class CounterComponent(
     }
 
     override fun mapToUiModel(state: ScreenState): CounterUiState {
-        return CounterUiState.fromDomain(
-            state as CounterState
-        )
+        return (state as CounterState).toUiState()
     }
 
     @Composable

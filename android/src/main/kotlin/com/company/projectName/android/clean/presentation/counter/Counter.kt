@@ -13,12 +13,7 @@ fun Counter(
     Column {
         Text(text = "counter: ${state.counter}")
         Button(onClick = timerClick) {
-            val text = if (state.isProgress) {
-                "stop timer"
-            } else {
-                "start timer"
-            }
-            Text(text = text)
+            Text(text = state.buttonText)
         }
     }
 }
