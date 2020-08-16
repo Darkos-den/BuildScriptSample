@@ -1,6 +1,7 @@
 package com.company.projectName.android.home
 
 import com.company.projectName.android.base.mvu.*
+import com.company.projectName.android.counter.MessageQuery
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -10,34 +11,30 @@ import kotlinx.coroutines.withContext
 @ExperimentalStdlibApi
 class Program(
     private val reducer: Reducer,
-    private val effectHandler: EffectHandler
+    private val effectHandler: EffectHandler,
+    private val messageQuery: MessageQuery
 ) {
-
-    lateinit var state: ScreenState
-        private set
     private lateinit var component: Component
-
-    private val msgQueue = ArrayDeque<Msg>()
-
-    private val channel = Channel<ScreenMessageData>()
 
     private val job = CoroutineScope(Dispatchers.IO).launch {
         while (true) {
-            channel.receive().let {
+            messageQuery.channel.receive().let {
                 reducer.update(it.state, it.msg)
             }.also {
                 withContext(Dispatchers.Main) {
                     component.render(it.state)
                 }
             }.also {
-                this@Program.state = it.state
+                messageQuery.state = it.state
 
                 //remove current message from queue
-                if (msgQueue.size > 0) {
-                    msgQueue.removeFirst()
+                messageQuery.msgQueue.let {
+                    if (it.size > 0) {
+                        it.removeFirst()
+                    }
                 }
                 //and send a new msg to relay if any
-                loop()
+                messageQuery.loop()
             }.takeIf {
                 it.cmd !is None
             }?.let {
@@ -45,10 +42,10 @@ class Program(
                     effectHandler.call(it.cmd).let {
                         when (it) {
                             is Idle -> Unit
-                            else -> msgQueue.addLast(it)
+                            else -> messageQuery.msgQueue.addLast(it)
                         }
 
-                        loop()
+                        messageQuery.loop()
                     }
                 }
             }
@@ -59,35 +56,11 @@ class Program(
         initialState: ScreenState,
         component: Component
     ) {
-        state = initialState
+        messageQuery.state = initialState
         this.component = component
 
         CoroutineScope(Dispatchers.IO).launch {
             job.join()
-        }
-    }
-
-    private fun loop() {
-        if (msgQueue.size > 0) {
-            processMessage()
-        }
-    }
-
-    fun accept(msg: Msg) {
-        msgQueue.addLast(msg)
-        if (msgQueue.size == 1) {
-            processMessage()
-        }
-    }
-
-    private fun processMessage() {
-        ScreenMessageData(
-            state = state,
-            msg = msgQueue.first()
-        ).let {
-            CoroutineScope(Dispatchers.IO).launch {
-                channel.send(it)
-            }
         }
     }
 

@@ -4,6 +4,12 @@ interface Component {
     fun render(state: ScreenState)
 }
 
+fun component(block: (ScreenState) -> Unit) = object : Component {
+    override fun render(state: ScreenState) {
+        block(state)
+    }
+}
+
 interface Reducer {
     fun update(state: ScreenState, msg: Msg): ScreenCmdData
 }
