@@ -8,13 +8,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @ExperimentalStdlibApi
-class Program {
+class Program(
+    private val reducer: Reducer,
+    private val effectHandler: EffectHandler
+) {
 
     lateinit var state: ScreenState
         private set
     private lateinit var component: Component
-    private lateinit var reducer: Reducer
-    private lateinit var effectHandler: EffectHandler
 
     private val msgQueue = ArrayDeque<Msg>()
 
@@ -56,14 +57,10 @@ class Program {
 
     fun init(
         initialState: ScreenState,
-        component: Component,
-        reducer: Reducer,
-        effectHandler: EffectHandler
+        component: Component
     ) {
         state = initialState
         this.component = component
-        this.reducer = reducer
-        this.effectHandler = effectHandler
 
         CoroutineScope(Dispatchers.IO).launch {
             job.join()

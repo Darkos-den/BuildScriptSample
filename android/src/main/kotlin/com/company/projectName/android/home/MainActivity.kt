@@ -43,11 +43,27 @@ class MainActivity : AppCompatActivity() {
 
             HomeComponent(
                 parentContext = this,
-                program = Program(),
-                reducer = HomeComponent.DefaultReducer(),
-                effectHandler = HomeComponent.DefaultEffectHandler()
+                program = HomeDi().createProgram()
             ).show()
         }
+    }
+}
+
+class HomeDi {
+
+    @ExperimentalStdlibApi
+    fun createProgram(): Program {
+        return Program(
+            reducer = HomeComponent.DefaultReducer(),
+            effectHandler = HomeComponent.DefaultEffectHandler()
+        )
+    }
+}
+
+class Service {
+
+    fun startTimer() {
+
     }
 }
 
@@ -60,9 +76,7 @@ abstract class UiComponent
 @ExperimentalStdlibApi
 class HomeComponent(
     private val parentContext: Context,
-    private val program: Program,
-    reducer: Reducer,
-    effectHandler: EffectHandler
+    private val program: Program
 ) : UiComponent() {
 
     private val initialState = HomeScreenState.Initial
@@ -72,8 +86,6 @@ class HomeComponent(
     init {
         program.init(
             initialState = initialState,
-            reducer = reducer,
-            effectHandler = effectHandler,
             component = object : Component {
                 override fun render(state: ScreenState) {
                     uiState.postValue(state as HomeScreenState)
@@ -172,21 +184,7 @@ class HomeComponent(
 @Composable
 fun mainComponent() {
     val program = remember {
-        Program()
-    }
-
-    var screenState: HomeScreenState by state {
-        HomeScreenState.Initial as HomeScreenState
-    }
-
-    remember {
-        program.init(
-            initialState = HomeScreenState.Initial,
-            component = object : Component {
-                override fun render(state: ScreenState) {
-                    screenState = state as HomeScreenState
-                }
-            },
+        Program(
             reducer = object : Reducer {
 
                 override fun update(state: ScreenState, msg: Msg): ScreenCmdData {
@@ -217,6 +215,21 @@ fun mainComponent() {
                             )
                         }
                     }
+                }
+            }
+        )
+    }
+
+    var screenState: HomeScreenState by state {
+        HomeScreenState.Initial as HomeScreenState
+    }
+
+    remember {
+        program.init(
+            initialState = HomeScreenState.Initial,
+            component = object : Component {
+                override fun render(state: ScreenState) {
+                    screenState = state as HomeScreenState
                 }
             }
         )
