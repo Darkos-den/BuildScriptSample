@@ -10,23 +10,31 @@ val counterReducer = reducer { state, msg ->
     state as CounterState
     when (msg) {
         is CounterContract.Message.TimerClick -> {
-            if(state.isProgress){
-                ScreenCmdData(
-                    state = state.copy(isProgress = false),
-                    cmd = CounterContract.Command.StopTimer
-                )
-            }else{
-                ScreenCmdData(
-                    state = state.copy(isProgress = true),
-                    cmd = CounterContract.Command.StartTimer
-                )
+            when (state) {
+                is CounterState.Active -> {
+                    ScreenCmdData(
+                        state = CounterState.NotActive(state.counter),
+                        cmd = CounterContract.Command.StopTimer
+                    )
+                }
+                is CounterState.NotActive -> {
+                    ScreenCmdData(
+                        state = CounterState.Active(state.counter),
+                        cmd = CounterContract.Command.StartTimer
+                    )
+                }
             }
         }
         is TimerContract.Message.CounterNewValue -> {
-            ScreenCmdData(
-                state = state.copy(counter = msg.value),
-                cmd = None()
-            )
+            when (state) {
+                is CounterState.Active -> state.copy(counter = msg.value)
+                is CounterState.NotActive -> state.copy(counter = msg.value)
+            }.let {
+                ScreenCmdData(
+                    state = it,
+                    cmd = None()
+                )
+            }
         }
         else -> {
             ScreenCmdData(
