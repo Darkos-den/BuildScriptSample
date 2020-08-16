@@ -1,8 +1,8 @@
 package com.company.projectName.android.clean.domain.feature.counter
 
 import com.company.projectName.android.clean.domain.core.MessageQuery
+import com.company.projectName.android.clean.domain.feature.counter.contract.CounterContract
 import com.company.projectName.android.clean.domain.feature.counter.contract.ITimerProcessor
-import com.company.projectName.android.clean.domain.feature.counter.contract.TimerContract
 import kotlinx.coroutines.*
 
 @ExperimentalStdlibApi
@@ -20,7 +20,7 @@ class DomainProcessor(
                 counter++
 
                 messageQuery.accept(
-                    TimerContract.Message.CounterNewValue(
+                    CounterContract.Message.CounterNewValue(
                         counter
                     )
                 )

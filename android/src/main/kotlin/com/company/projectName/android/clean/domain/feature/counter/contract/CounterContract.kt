@@ -6,6 +6,7 @@ import com.company.projectName.android.base.mvu.Msg
 sealed class CounterContract {
     sealed class Message: Msg() {
         object TimerClick: Message()
+        class CounterNewValue(val value: Int): Message()
     }
     sealed class Command: Cmd(){
         object StartTimer: Command()
