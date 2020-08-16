@@ -14,8 +14,7 @@ import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.company.projectName.android.clean.presentation.CounterComponent
-import com.company.projectName.android.clean.di.CounterDI
+import com.company.projectName.android.clean.presentation.counter.CounterComponent
 import com.company.projectName.android.clean.domain.core.MessageQuery
 import com.company.projectName.android.home.view.Data
 import com.company.projectName.android.home.view.Initial

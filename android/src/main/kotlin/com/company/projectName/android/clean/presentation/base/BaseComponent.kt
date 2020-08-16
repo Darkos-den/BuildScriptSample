@@ -1,4 +1,4 @@
-package com.company.projectName.android.clean.presentation
+package com.company.projectName.android.clean.presentation.base
 
 import android.content.Context
 import androidx.compose.Composable

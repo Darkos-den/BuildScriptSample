@@ -1,4 +1,4 @@
-package com.company.projectName.android.clean.presentation
+package com.company.projectName.android.clean.presentation.counter
 
 import com.company.projectName.android.base.mvu.ScreenState
 import com.company.projectName.android.clean.domain.feature.counter.CounterState

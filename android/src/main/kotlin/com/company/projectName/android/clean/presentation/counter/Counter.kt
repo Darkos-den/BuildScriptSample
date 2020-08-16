@@ -1,4 +1,4 @@
-package com.company.projectName.android.clean.presentation
+package com.company.projectName.android.clean.presentation.counter
 
 import androidx.compose.Composable
 import androidx.ui.foundation.Text

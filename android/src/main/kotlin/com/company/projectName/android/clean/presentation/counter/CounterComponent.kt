@@ -1,4 +1,4 @@
-package com.company.projectName.android.clean.presentation
+package com.company.projectName.android.clean.presentation.counter
 
 import android.content.Context
 import android.util.Log
@@ -12,6 +12,7 @@ import com.company.projectName.android.clean.domain.core.MessageQuery
 import com.company.projectName.android.clean.domain.core.Program
 import com.company.projectName.android.clean.domain.feature.counter.CounterContract
 import com.company.projectName.android.clean.domain.feature.counter.CounterState
+import com.company.projectName.android.clean.presentation.base.BaseComponent
 
 @ExperimentalStdlibApi
 class CounterComponent(
@@ -27,7 +28,9 @@ class CounterComponent(
     }
 
     override fun mapToUiModel(state: ScreenState): CounterUiState {
-        return CounterUiState.fromDomain(state as CounterState)
+        return CounterUiState.fromDomain(
+            state as CounterState
+        )
     }
 
     @Composable
