@@ -9,17 +9,18 @@ import com.company.projectName.android.clean.domain.feature.counter.contract.Tim
 val counterReducer = reducer { state, msg ->
     state as CounterState
     when (msg) {
-        is CounterContract.Message.StartTimerClick -> {
-            ScreenCmdData(
-                state = state.copy(isProgress = true),
-                cmd = CounterContract.Command.StartTimer
-            )
-        }
-        is CounterContract.Message.StopTimerClick -> {
-            ScreenCmdData(
-                state = state.copy(isProgress = false),
-                cmd = CounterContract.Command.StopTimer
-            )
+        is CounterContract.Message.TimerClick -> {
+            if(state.isProgress){
+                ScreenCmdData(
+                    state = state.copy(isProgress = false),
+                    cmd = CounterContract.Command.StopTimer
+                )
+            }else{
+                ScreenCmdData(
+                    state = state.copy(isProgress = true),
+                    cmd = CounterContract.Command.StartTimer
+                )
+            }
         }
         is TimerContract.Message.CounterNewValue -> {
             ScreenCmdData(

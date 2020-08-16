@@ -10,8 +10,8 @@ import com.company.projectName.android.base.mvu.ScreenState
 import com.company.projectName.android.clean.di.CounterDI
 import com.company.projectName.android.clean.domain.core.MessageQuery
 import com.company.projectName.android.clean.domain.core.Program
-import com.company.projectName.android.clean.domain.feature.counter.contract.CounterContract
 import com.company.projectName.android.clean.domain.feature.counter.CounterState
+import com.company.projectName.android.clean.domain.feature.counter.contract.CounterContract
 import com.company.projectName.android.clean.presentation.base.BaseComponent
 
 @ExperimentalStdlibApi
@@ -45,13 +45,7 @@ class CounterComponent(
         Counter(
             state = state ?: return,
             timerClick = {
-                if (state?.isProgress == true) {
-                    CounterContract.Message.StopTimerClick
-                } else {
-                    CounterContract.Message.StartTimerClick
-                }.let {
-                    messageQuery.accept(it)
-                }
+                messageQuery.accept(CounterContract.Message.TimerClick)
             }
         )
     }

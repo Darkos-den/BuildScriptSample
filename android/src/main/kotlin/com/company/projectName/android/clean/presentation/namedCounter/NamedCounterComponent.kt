@@ -44,13 +44,7 @@ class NamedCounterComponent(
         NamedCounter(
             uiState = state ?: return,
             timerClick = {
-                if (state?.counter?.isProgress == true) {
-                    CounterContract.Message.StopTimerClick
-                } else {
-                    CounterContract.Message.StartTimerClick
-                }.let {
-                    messageQuery.accept(it)
-                }
+                messageQuery.accept(CounterContract.Message.TimerClick)
             },
             nameChanged = {
                 messageQuery.accept(NamedCounterContract.Message.NameChanged(it))
