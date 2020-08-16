@@ -1,7 +1,7 @@
 package com.company.projectName.android.clean.di
 
 import com.company.projectName.android.base.mvu.Component
-import com.company.projectName.android.clean.domain.DomainService
+import com.company.projectName.android.clean.domain.DomainProcessor
 import com.company.projectName.android.clean.domain.core.MessageQuery
 import com.company.projectName.android.clean.domain.core.Program
 import com.company.projectName.android.clean.domain.feature.counter.CounterEffectHandler
@@ -14,7 +14,7 @@ class CounterDI(
     private val component: Component
 ) {
 
-    private fun createService() = DomainService().apply {
+    private fun createService() = DomainProcessor().apply {
         messageQuery = this@CounterDI.messageQuery
     }
 

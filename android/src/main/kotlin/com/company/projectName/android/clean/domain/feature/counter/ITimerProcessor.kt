@@ -1,6 +1,6 @@
 package com.company.projectName.android.clean.domain.feature.counter
 
-interface IService {
+interface ITimerProcessor {
     fun startTimer()
     fun stopTimer()
 }

@@ -1,11 +1,11 @@
 package com.company.projectName.android.clean.domain
 
 import com.company.projectName.android.clean.domain.core.MessageQuery
-import com.company.projectName.android.clean.domain.feature.counter.IService
+import com.company.projectName.android.clean.domain.feature.counter.ITimerProcessor
 import kotlinx.coroutines.*
 
 @ExperimentalStdlibApi
-class DomainService: IService {
+class DomainProcessor: ITimerProcessor {
 
     private var timerJob: Job? = null
     private var counter = 0

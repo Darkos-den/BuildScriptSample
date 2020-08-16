@@ -6,16 +6,16 @@ import com.company.projectName.android.base.mvu.Idle
 import com.company.projectName.android.base.mvu.Msg
 
 class CounterEffectHandler(
-    private val service: IService
+    private val processor: ITimerProcessor
 ) : EffectHandler {
 
     override suspend fun call(cmd: Cmd): Msg {
         when (cmd) {
             is CounterContract.Command.StartTimer -> {
-                service.startTimer()
+                processor.startTimer()
             }
             is CounterContract.Command.StopTimer -> {
-                service.stopTimer()
+                processor.stopTimer()
             }
         }
 

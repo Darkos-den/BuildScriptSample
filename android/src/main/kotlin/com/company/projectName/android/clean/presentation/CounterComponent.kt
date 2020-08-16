@@ -5,10 +5,7 @@ import android.util.Log
 import androidx.compose.Composable
 import androidx.compose.getValue
 import androidx.compose.onDispose
-import androidx.ui.foundation.Text
-import androidx.ui.layout.Column
 import androidx.ui.livedata.observeAsState
-import androidx.ui.material.Button
 import com.company.projectName.android.base.mvu.ScreenState
 import com.company.projectName.android.clean.di.CounterDI
 import com.company.projectName.android.clean.domain.core.MessageQuery
@@ -42,7 +39,7 @@ class CounterComponent(
             //todo: send dispose message
         }
 
-        buildView(
+        Counter(
             state = state ?: return,
             timerClick = {
                 if (state?.isProgress == true) {
@@ -54,23 +51,5 @@ class CounterComponent(
                 }
             }
         )
-    }
-
-    @Composable
-    private fun buildView(
-        timerClick: () -> Unit,
-        state: CounterUiState
-    ) {
-        Column {
-            Text(text = "counter: ${state.counter}")
-            Button(onClick = timerClick) {
-                val text = if (state.isProgress) {
-                    "stop timer"
-                } else {
-                    "start timer"
-                }
-                Text(text = text)
-            }
-        }
     }
 }
