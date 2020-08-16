@@ -20,3 +20,4 @@ include(
     ":common:network",
     ":common:repository"
 )
+include(":mylibrary")

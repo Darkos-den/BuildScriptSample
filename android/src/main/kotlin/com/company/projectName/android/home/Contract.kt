@@ -48,7 +48,7 @@ sealed class HomeScreenState : ScreenState() {
         ): ScreenCmdData {
             return ScreenCmdData(
                 state = Invalidatable(oldState),
-                cmd = HomeCmd.InvalidateData
+                cmd = None()
             )
         }
     }

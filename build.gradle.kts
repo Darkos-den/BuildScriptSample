@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 buildscript {
+    val kotlin_version by extra("1.3.61")
     repositories {
         jcenter()
         google()
@@ -13,6 +14,7 @@ buildscript {
         classpath(Libs.Kotlin.GRADLE.full)
         classpath(Libs.AndroidGradle.GRADLE.full)
         classpath(Libs.Detekt.GRADLE.full)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 

@@ -14,6 +14,8 @@ class LiveUpdatable<T : Any>(
     private val liveSource = MutableLiveData<T>()
     val liveValue: LiveData<T> = liveSource
 
+    val test = MutableLiveData<String>()
+
     fun set(newValue: T) {
         value = newValue
     }

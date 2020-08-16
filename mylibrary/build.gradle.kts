@@ -2,7 +2,7 @@ import config.depends.applyDependencies
 import config.depends.implementation
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     id("app-config-android")
 }
@@ -14,8 +14,6 @@ val deps = listOf(
     *Libs.AndroidX.Compose.all,
     implementation(Libs.Coroutines.ANDROID)
 )
-
-androidApplicationConfig()
 
 android {
     defaultConfig {
@@ -49,5 +47,4 @@ dependencies {
     applyDependencies(deps)
 
     implementation(project(":common:core"))
-    implementation(project(":mylibrary"))
 }
