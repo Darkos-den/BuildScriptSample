@@ -1,4 +1,4 @@
-package com.company.projectName.android.clean.domain.feature.counter
+package com.company.projectName.android.clean.domain.feature.counter.contract
 
 import com.company.projectName.android.base.mvu.Cmd
 import com.company.projectName.android.base.mvu.Msg

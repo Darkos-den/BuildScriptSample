@@ -4,6 +4,8 @@ import com.company.projectName.android.base.mvu.Cmd
 import com.company.projectName.android.base.mvu.EffectHandler
 import com.company.projectName.android.base.mvu.Idle
 import com.company.projectName.android.base.mvu.Msg
+import com.company.projectName.android.clean.domain.feature.counter.contract.CounterContract
+import com.company.projectName.android.clean.domain.feature.counter.contract.ITimerProcessor
 
 class CounterEffectHandler(
     private val processor: ITimerProcessor

@@ -1,4 +1,4 @@
-package com.company.projectName.android.clean.presentation.counter
+package com.company.projectName.android.clean.presentation.namedCounter
 
 import android.content.Context
 import android.util.Log
@@ -7,30 +7,29 @@ import androidx.compose.getValue
 import androidx.compose.onDispose
 import androidx.ui.livedata.observeAsState
 import com.company.projectName.android.base.mvu.ScreenState
-import com.company.projectName.android.clean.di.CounterDI
+import com.company.projectName.android.clean.di.NamedCounterDi
 import com.company.projectName.android.clean.domain.core.MessageQuery
 import com.company.projectName.android.clean.domain.core.Program
 import com.company.projectName.android.clean.domain.feature.counter.contract.CounterContract
-import com.company.projectName.android.clean.domain.feature.counter.CounterState
+import com.company.projectName.android.clean.domain.feature.namedCounter.NamedCounterContract
+import com.company.projectName.android.clean.domain.feature.namedCounter.NamedCounterState
 import com.company.projectName.android.clean.presentation.base.BaseComponent
 
 @ExperimentalStdlibApi
-class CounterComponent(
+class NamedCounterComponent(
     parentContext: Context,
     messageQuery: MessageQuery
-) : BaseComponent<CounterUiState>(
+) : BaseComponent<NamedUiState>(
     parentContext,
     messageQuery
 ) {
 
     override fun injectProgram(): Program {
-        return CounterDI(messageQuery, this).createProgram()
+        return NamedCounterDi(messageQuery, this).createProgram()
     }
 
-    override fun mapToUiModel(state: ScreenState): CounterUiState {
-        return CounterUiState.fromDomain(
-            state as CounterState
-        )
+    override fun mapToUiModel(state: ScreenState): NamedUiState {
+        return NamedUiState.fromDomain(state as NamedCounterState)
     }
 
     @Composable
@@ -42,17 +41,21 @@ class CounterComponent(
             //todo: send dispose message
         }
 
-        Counter(
-            state = state ?: return,
+        NamedCounter(
+            uiState = state ?: return,
             timerClick = {
-                if (state?.isProgress == true) {
+                if (state?.counter?.isProgress == true) {
                     CounterContract.Message.StopTimerClick
                 } else {
                     CounterContract.Message.StartTimerClick
                 }.let {
                     messageQuery.accept(it)
                 }
+            },
+            nameChanged = {
+                messageQuery.accept(NamedCounterContract.Message.NameChanged(it))
             }
         )
     }
+
 }
