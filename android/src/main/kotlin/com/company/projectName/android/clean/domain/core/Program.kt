@@ -1,10 +1,8 @@
-package com.company.projectName.android.home
+package com.company.projectName.android.clean.domain.core
 
 import com.company.projectName.android.base.mvu.*
-import com.company.projectName.android.counter.MessageQuery
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -12,9 +10,10 @@ import kotlinx.coroutines.withContext
 class Program(
     private val reducer: Reducer,
     private val effectHandler: EffectHandler,
-    private val messageQuery: MessageQuery
+    private val messageQuery: MessageQuery,
+    private val component: Component,
+    initialState: ScreenState
 ) {
-    private lateinit var component: Component
 
     private val job = CoroutineScope(Dispatchers.IO).launch {
         while (true) {
@@ -52,16 +51,13 @@ class Program(
         }
     }
 
-    fun init(
-        initialState: ScreenState,
-        component: Component
-    ) {
+    init {
+        component.render(initialState)
         messageQuery.state = initialState
-        this.component = component
+    }
 
-        CoroutineScope(Dispatchers.IO).launch {
-            job.join()
-        }
+    fun start() {
+        job.start()
     }
 
     fun clear() {

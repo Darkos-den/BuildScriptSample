@@ -1,11 +1,11 @@
-package com.company.projectName.android.counter.service
+package com.company.projectName.android.clean.domain
 
-import com.company.projectName.android.counter.MessageQuery
-import com.company.projectName.android.counter.contract.ServiceContract
+import com.company.projectName.android.clean.domain.core.MessageQuery
+import com.company.projectName.android.clean.domain.feature.counter.IService
 import kotlinx.coroutines.*
 
 @ExperimentalStdlibApi
-class Service: IService {
+class DomainService: IService {
 
     private var timerJob: Job? = null
     private var counter = 0

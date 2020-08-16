@@ -1,4 +1,4 @@
-package com.company.projectName.android.counter
+package com.company.projectName.android.clean.domain.core
 
 import com.company.projectName.android.base.mvu.Msg
 import com.company.projectName.android.base.mvu.ScreenMessageData
