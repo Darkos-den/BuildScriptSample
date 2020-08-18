@@ -6,6 +6,9 @@ import com.company.projectName.android.base.mvu.reducer
 import com.company.projectName.android.clean.domain.feature.counter.CounterState
 import com.company.projectName.android.clean.domain.feature.counter.contract.CounterContract
 import com.company.projectName.android.clean.domain.feature.counter.counterReducer
+import com.company.projectName.android.clean.domain.feature.hintedTextField.HintedTextFieldContract
+import com.company.projectName.android.clean.domain.feature.hintedTextField.HintedTextFiledState
+import com.company.projectName.android.clean.domain.feature.hintedTextField.hintedTextFieldReducer
 
 val namedCounterReducer = reducer { state, msg ->
     state as NamedCounterState
@@ -20,6 +23,16 @@ val namedCounterReducer = reducer { state, msg ->
             ScreenCmdData(
                 state = state.copy(name = msg.value),
                 cmd = None()
+            )
+        }
+        is HintedTextFieldContract.Message.FocusChanged,
+        is HintedTextFieldContract.Message.TextChanged -> hintedTextFieldReducer.update(
+            state.textField,
+            msg
+        ).let {
+            ScreenCmdData(
+                state = state.copy(textField = it.state as HintedTextFiledState),
+                cmd = it.cmd
             )
         }
         else -> {

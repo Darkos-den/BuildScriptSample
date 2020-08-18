@@ -6,6 +6,7 @@ import com.company.projectName.android.clean.domain.core.Program
 import com.company.projectName.android.clean.domain.feature.counter.CounterEffectHandler
 import com.company.projectName.android.clean.domain.feature.counter.CounterState
 import com.company.projectName.android.clean.domain.feature.counter.DomainProcessor
+import com.company.projectName.android.clean.domain.feature.hintedTextField.HintedTextFiledState
 import com.company.projectName.android.clean.domain.feature.namedCounter.NamedCounterState
 import com.company.projectName.android.clean.domain.feature.namedCounter.namedCounterReducer
 
@@ -25,7 +26,8 @@ class NamedCounterDi(
             ),
             initialState = NamedCounterState(
                 name = "name",
-                counter = CounterState.NotActive(0)
+                counter = CounterState.NotActive(0),
+                textField = HintedTextFiledState.HintDisplay("Default hint")
             ),
             component = component
         )
