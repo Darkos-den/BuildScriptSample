@@ -11,8 +11,8 @@ fun TestComponent(
 
 
     TextFiledWithHint(
-        state = TextFiledUiState.TextDisplay(),
-        onFocusChanged =,
-        onTextChanged =
+        state = TextFiledUiState.TextDisplay("", ""),
+        onFocusChanged = {},
+        onTextChanged = {}
     )
 }

@@ -3,22 +3,17 @@ package com.company.projectName.android.home
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.*
-import androidx.ui.core.Modifier
+import androidx.compose.Composable
+import androidx.compose.onCommit
+import androidx.compose.onDispose
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Text
-import androidx.ui.foundation.TextField
-import androidx.ui.foundation.TextFieldValue
 import androidx.ui.graphics.Color
-import androidx.ui.layout.Column
-import androidx.ui.layout.fillMaxWidth
-import androidx.ui.layout.padding
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.company.projectName.android.clean.presentation.counter.CounterComponent
 import com.company.projectName.android.clean.domain.core.MessageQuery
 import com.company.projectName.android.clean.presentation.namedCounter.NamedCounterComponent
 import com.company.projectName.android.home.view.Data
@@ -42,8 +37,9 @@ class MainActivity : AppCompatActivity() {
 
             val messageQuery = MessageQuery()
 
+            //activity component
             NamedCounterComponent(
-                parentContext = this@MainActivity,
+                parentContext = applicationContext,
                 messageQuery = messageQuery
             ).drawState()
         }

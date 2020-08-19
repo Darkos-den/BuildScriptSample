@@ -15,6 +15,7 @@ abstract class BaseComponent<T : ScreenState>(
 ) : Component {
 
     val uiState = MutableLiveData<T>()
+    lateinit var program: Program
 
     init {
         run()
@@ -23,7 +24,8 @@ abstract class BaseComponent<T : ScreenState>(
     abstract fun injectProgram(): Program
 
     private fun run() {
-        injectProgram().start()
+        program = injectProgram()
+        program.start()
     }
 
     override fun render(state: ScreenState) {
@@ -34,4 +36,8 @@ abstract class BaseComponent<T : ScreenState>(
 
     @Composable
     abstract fun drawState()
+
+    fun clear() {
+        program.clear()
+    }
 }

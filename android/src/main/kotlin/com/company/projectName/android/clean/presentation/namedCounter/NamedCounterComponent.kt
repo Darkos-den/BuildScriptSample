@@ -42,6 +42,7 @@ class NamedCounterComponent(
         onDispose {
             Log.d("myLog", "dispose screen")
             //todo: send dispose message
+            clear()
         }
 
         Column {
